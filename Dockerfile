@@ -23,8 +23,10 @@ RUN cd frontend && npm install
 
 # Copy source code
 COPY backend ./backend
-COPY backend/.env ./backend/.env
 COPY frontend ./frontend
+
+# Copy .env file if it exists (make it optional)
+COPY backend/.env* ./backend/
 
 # Build frontend
 RUN cd frontend && npm run build
