@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { connectSocket, disconnectSocket } from './socketService';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://192.168.1.198:3000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 export const login = async (credentials) => {
   try {
