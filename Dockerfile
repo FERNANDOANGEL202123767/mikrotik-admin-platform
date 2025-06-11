@@ -1,9 +1,9 @@
-# backend/Dockerfile
+# Multi-stage build for better optimization
 FROM node:20-slim
 
 WORKDIR /app
 
-# Install dependencies for canvas (used by pdfGenerator)
+# Install system dependencies for canvas (used by pdfGenerator)
 RUN apt-get update && apt-get install -y \
     libcairo2-dev \
     libpango1.0-dev \
@@ -13,30 +13,35 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy backend package.json and install dependencies
+# Copy and install backend dependencies
 COPY backend/package*.json ./backend/
 RUN cd backend && npm install
 
-# Copy frontend package.json and install dependencies
-COPY frontend/package*.json ./frontend/
-RUN cd frontend && npm install
+# Copy and build frontend
+WORKDIR /app/frontend
+COPY frontend/package*.json ./
+RUN npm install
+COPY frontend/ .
+RUN npm run build
 
-# Copy source code
+# Copy backend source
+WORKDIR /app
 COPY backend ./backend
-COPY frontend ./frontend
-
-# Copy .env file if it exists (make it optional)
-COPY backend/.env* ./backend/
-
-# Build frontend
-RUN cd frontend && npm run build
 
 # Copy frontend build to backend public directory
 RUN mkdir -p backend/public && cp -r frontend/dist/* backend/public/
 
-# Copy icons to backend public directory
-RUN mkdir -p backend/public/icons && cp -r frontend/public/icons/* backend/public/icons/
+# Copy icons to backend public directory (if they exist)
+RUN if [ -d "frontend/public/icons" ]; then \
+        mkdir -p backend/public/icons && \
+        cp -r frontend/public/icons/* backend/public/icons/; \
+    fi
 
+# Set working directory to backend for the final command
 WORKDIR /app/backend
 
+# Expose port (adjust if your app uses a different port)
+EXPOSE 3000
+
+# Start the application
 CMD ["npm", "start"]
