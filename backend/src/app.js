@@ -18,7 +18,7 @@ const app = express();
 app.use(cors({
   origin: [
     process.env.CLIENT_URL || 'http://localhost:5173', // Soporte para desarrollo local
-    'https://miapp.onrender.com', // Dominio de Render
+    'https://mikrotik-admin-platform.onrender.com', // Dominio de Render
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
