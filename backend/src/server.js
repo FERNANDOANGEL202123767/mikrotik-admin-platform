@@ -18,7 +18,7 @@ const server = http.createServer(app);
 
 const io = socketIo(server, {
   cors: {
-    origin: ['http://localhost:5173', 'https://your-app.onrender.com'],
+    origin: ['http://localhost:5173', 'https://mikrotik-admin-platform.onrender.com'],
     methods: ['GET', 'POST'],
     credentials: true,
   },
@@ -29,7 +29,7 @@ app.use((req, res, next) => {
   const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
   res.setHeader(
     'Content-Security-Policy',
-    `default-src 'self'; connect-src 'self' ws://localhost:3000 wss://miapp.onrender.com ${clientUrl} https://miapp.onrender.com; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'`
+    `default-src 'self'; connect-src 'self' ws://localhost:3000 wss://mikrotik-admin-platform.onrender.com ${clientUrl} https://mikrotik-admin-platform.onrender.com; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'`
   );
   next();
 });
@@ -37,7 +37,7 @@ app.use((req, res, next) => {
 // Middleware
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://your-app.onrender.com'],
+  origin: ['http://localhost:5173', 'https://mikrotik-admin-platform.onrender.com'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
