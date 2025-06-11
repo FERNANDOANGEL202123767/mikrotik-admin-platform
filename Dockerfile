@@ -22,7 +22,7 @@ WORKDIR /app/frontend
 COPY frontend/package*.json ./
 RUN npm install
 COPY frontend/ .
-RUN npm run build
+RUN npm run build -- --clean
 
 # Copy backend source
 WORKDIR /app
