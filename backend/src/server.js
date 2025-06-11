@@ -29,7 +29,7 @@ app.use((req, res, next) => {
   const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
   res.setHeader(
     'Content-Security-Policy',
-    `default-src 'self'; connect-src 'self' ws://localhost:3000 wss://mikrotik-admin-platform.onrender.com ${clientUrl} https://mikrotik-admin-platform.onrender.com; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'`
+    `default-src 'self'; connect-src 'self' ${clientUrl} wss://mikrotik-admin-platform.onrender.com https://mikrotik-admin-platform.onrender.com; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'`
   );
   next();
 });
